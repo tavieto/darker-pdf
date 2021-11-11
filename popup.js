@@ -1,0 +1,25 @@
+let changeColor = document.getElementById("changeColor");
+
+chrome.storage.sync.get("color", ({ color }) => {
+    changeColor.style.background = color
+});
+
+changeColor.addEventListener("click", async () => {
+    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+    chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        function: setPageBackgroundColor
+    });
+})
+
+
+function setPageBackgroundColor() {
+    chrome.storage.sync.get("color", ({ color }) => {
+
+        var style = document.createElement('style');
+        style.type = 'text/css';
+        style.innerHTML = 'embed { filter: invert(80%); }';
+        document.head.appendChild(style)
+    });
+}
