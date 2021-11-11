@@ -1,4 +1,9 @@
+:root {
+  background-color: #404040;
+}
+
 button {
+    color: whitesmoke;
     outline: none;
     margin: 10px;
     border: none;
